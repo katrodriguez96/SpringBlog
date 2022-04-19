@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Roll Dice</title>
+    <link th:replace="/partials :: bootstrap">
 </head>
 <body>
+<nav th:replace="/partials :: navbar"></nav>
 <h1>Guess a number from 1 to 6:</h1>
 <a href="/roll-dice/1">1</a>
 <a href="/roll-dice/2">2</a>
@@ -17,5 +19,6 @@
 <h1>Number rolled: <span th:text="${random}">?</span></h1>
 <h1 th:if="${correctGuess}">You guessed correctly!</h1>
 <h1 th:if="${incorrect}">You guessed wrong, try again.</h1>
+<nav th:replace="/partials :: footer"></nav>
 </body>
 </html>
