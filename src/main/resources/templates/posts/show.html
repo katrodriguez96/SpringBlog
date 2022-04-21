@@ -9,6 +9,7 @@
 <nav th:replace="/partials :: navbar"></nav>
 <div>
     <h1 th:text="${post.title}"></h1>
+    <h3>Created by: <span th:text="${post.getUser().getEmail()}">user email</span></h3>
     <p th:text="${post.body}"></p>
 </div>
 <nav th:replace="/partials :: footer"></nav>
