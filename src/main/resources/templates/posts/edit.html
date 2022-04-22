@@ -8,7 +8,7 @@
 <body>
 <nav th:replace="/partials :: navbar"></nav>
 <h1>Edit post</h1>
-<form th:action="@{/posts/{id}/edit}" th:method="post" th:object="${post}">
+<form th:action="@{/posts/edit}" th:method="post" th:object="${post}">
     Title
     <br>
     <input th:field="*{title}">
