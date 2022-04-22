@@ -31,14 +31,26 @@ public class PostController {
         model.addAttribute("post", postDao.getPostById(id));
         return "posts/show";
     }
+    @GetMapping("/posts/{id}/edit")
+    public String editPostForm(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.getPostById(id));
+        return "posts/edit";
+    }
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@ModelAttribute Post post) {
+        postDao.save(post);
+        return "redirect:/posts";
+    }
     @GetMapping(path="/posts/create")
-    public String createPostForm() {
+    public String createPostForm(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
+    public String createPost(@ModelAttribute Post post) {
         User postUser = userDao.getUserById(1);
-        postDao.save(new Post(title, body, postUser));
+        post.setUser(postUser);
+        postDao.save(post);
         return "redirect:/posts";
     }
 }
