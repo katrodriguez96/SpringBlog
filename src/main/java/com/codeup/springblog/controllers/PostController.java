@@ -5,6 +5,7 @@ import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.model.User;
 import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class PostController {
 
     @GetMapping("/posts")
     public String posts(Model model) {
+//        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println("Hello there! The logged in user's email is " + loggedInUser.getEmail() + ", and the logged in user's username is " + loggedInUser.getUsername());
         model.addAttribute("allPosts", postDao.findAll());
         return "posts/index";
     }
@@ -49,8 +52,8 @@ public class PostController {
     }
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User postUser = userDao.getUserById(1);
-        post.setUser(postUser);
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setUser(loggedInUser);
         postDao.save(post);
         emailService.prepareAndSend(post, "New Post Created", "A new post was created");
         return "redirect:/posts";

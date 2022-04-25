@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Posts Index</title>
@@ -7,6 +8,21 @@
 </head>
 <body>
 <nav th:replace="/partials :: navbar"></nav>
+
+<div sec:authorize="isAuthenticated()">
+    <p>Good morning,  <span th:text="${#authentication.principal.username}"/>! Would you like to create a new post?<br>
+        <a th:href="@{/posts/create}">Head to create a post!</a></p>
+</div>
+
+<p>You're currently logged in as:</p>
+<div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+
+    User ID: <span th:text="${#authentication.principal.id}"/>
+    Username: <span th:text="${#authentication.principal.username}"/>
+    Email: <span th:text="${#authentication.principal.email}"/>
+</div>
+
 <div th:each="post : ${allPosts}">
     <div>
         <h1 th:text="${post.title}"></h1>

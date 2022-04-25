@@ -20,6 +20,14 @@ public class User {
 
     public User() {}
 
+    // Copy constructor
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
     public User(String username, String email, String password, List<Post> posts) {
         this.username = username;
         this.email = email;
